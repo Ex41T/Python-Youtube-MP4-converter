@@ -3,7 +3,7 @@ from yt_dlp import YoutubeDL
 import subprocess
 
 
-defdownload_func(url):
+def download_func(url):
 
 
     
