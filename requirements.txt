@@ -1,0 +1,9 @@
+# Python dependencies
+yt-dlp>=2021.12.1
+ffmpeg-python>=0.2.0
+
+# Note: You must manually install the FFmpeg binary and add it to your system's PATH.
+# FFmpeg installation guide:
+# - Windows: Download from https://ffmpeg.org/download.html and add the 'bin' folder to PATH.
+# - Linux: Use `sudo apt install ffmpeg` (Debian/Ubuntu) or equivalent for your distribution.
+# - macOS: Use `brew install ffmpeg`.
