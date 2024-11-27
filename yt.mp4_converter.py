@@ -8,7 +8,7 @@ defdownload_func(url):
 
     
     """
-    Downloads the best available video with audio from the provided YouTube URL.
+    Downloads the best available quality video with audio from the provided YouTube URL.
     Ensures the file is saved as an MP4 in the current directory.
     The frame rate (FPS) is also retrieved if available.
     """
