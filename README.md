@@ -3,7 +3,7 @@ Python <strong>YouTube<strong/> & <strong>TikTok</strong> Video Converter
 Looking for a simple way to download videos from YouTube and TikTok? This command-line tool has got you covered! It lets you download videos in the best available quality and saves them as MP4 files. Plus, it offers handy features like converting YouTube videos to 60 FPS for smoother playback or transcoding TikTok videos to H.264 format, making them more compatible with various devices and players.
 
 <strong>What Can This Tool Do?</strong>
-<br>
+<br></br>
 YouTube Video Downloader
 
 Downloads videos from YouTube in the highest quality available.
@@ -11,7 +11,7 @@ Downloads videos from YouTube in the highest quality available.
 Automatically merges video and audio into a single MP4 file.
 
 Includes an optional feature to convert videos to 60 FPS using FFmpeg, making playback smoother.
-<br>
+<br></br>
 TikTok Video Downloader
 
 Downloads TikTok videos <strong>without a watermark</strong>.
