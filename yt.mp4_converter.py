@@ -1,6 +1,18 @@
 import os
 from yt_dlp import YoutubeDL
 import subprocess
+import shutil
+import time
+
+def check_ffmpeg():
+    """
+    Checks if FFmpeg is installed and accessible from the command line.
+    """
+    if shutil.which("ffmpeg") is None:
+        print("Error: FFmpeg is not installed or not added to the PATH.")
+        print("Please install FFmpeg and ensure it is accessible from the command line.")
+        time.sleep(5)
+        exit(1)  # Exit the program
 
 def download_youtube_video(url):
     """
@@ -49,12 +61,12 @@ def convert_to_60fps(file_path):
 
 def download_tiktok_video(url):
     """
-    Downloads a TikTok video using yt-dlp (without watermark)
+    Downloads a TikTok video using yt-dlp without watermark
     and converts it to H.264 (MP4) format using FFmpeg.
     If conversion succeeds, the encoded file is deleted.
     """
     opts = {
-        'format': 'mp4',  # save as mp4
+        'format': 'mp4',  # Save as mp4
         'outtmpl': './%(title)s.%(ext)s',  # Output filename
     }
 
@@ -104,6 +116,9 @@ def convert_to_h264(file_path):
         return None
 
 if __name__ == "__main__":
+    # Check if FFmpeg is installed before running the script
+    check_ffmpeg()
+
     while True:
         print("\nMenu:")
         print("1. Download YouTube video")
