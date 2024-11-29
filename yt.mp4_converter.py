@@ -2,90 +2,138 @@ import os
 from yt_dlp import YoutubeDL
 import subprocess
 
-
-def download_func(url):
-
-
-    
+def download_youtube_video(url):
     """
-    Downloads the best available quality video with audio from the provided YouTube URL.
-    Ensures the file is saved as an MP4 in the current directory.
-    The frame rate (FPS) is also retrieved if available.
+    Downloads the best quality video with audio as MP4.
+    Returns the file path and FPS if available.
     """
-
-
-    
-    ydl_opts = {
-        'format': 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]',  
-        'outtmpl': './%(title)s.%(ext)s',  
-        'merge_output_format': 'mp4',  
+    opts = {
+        'format': 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]',
+        'outtmpl': './%(title)s.%(ext)s',
+        'merge_output_format': 'mp4',
     }
     try:
-        with YoutubeDL(ydl_opts) as ydl:
-            info_dict = ydl.extract_info(url)
-            file_name = ydl.prepare_filename(info_dict)
-            fps = info_dict.get('fps', None)  
-            print(f"\nDownloaded file: {file_name}")
-            print(f"Frame rate (FPS): {fps or 'Unknown'}")
-            return file_name, fps
+        with YoutubeDL(opts) as ydl:
+            info = ydl.extract_info(url)
+            file_path = ydl.prepare_filename(info)
+            fps = info.get('fps', None)
+            print(f"Downloaded: {file_path}")
+            print(f"FPS: {fps or 'Unknown'}")
+            return file_path, fps
     except Exception as e:
-        print(f"Error during download: {e}")
+        print(f"Download error: {e}")
         return None, None
 
-
-def convert_fps(file_path):
-
+def convert_to_60fps(file_path):
     """
-    
-    Converts a given video file to 60 frames per second (FPS) using FFmpeg. (optional)
-    
+    Converts a video to 60 FPS using FFmpeg.
     """
+    if not os.path.exists(file_path):
+        print(f"File not found: {file_path}")
+        return None
 
-
-
+    output_file = f"60fps_{os.path.basename(file_path)}"
+    cmd = [
+        "ffmpeg", "-i", file_path, "-filter:v", "fps=fps=60", "-c:a", "copy", output_file
+    ]
     try:
-        if not os.path.exists(file_path):
-            print(f"The file {file_path} does not exist!")
-            return None
-
-        print("Converting video to 60 FPS using FFmpeg...")
-        output_file = f"60fps_{os.path.basename(file_path)}"
-
-        command = [
-            "ffmpeg", "-i", file_path, "-filter:v", "fps=fps=60", "-c:a", "copy", output_file
-        ]
-        subprocess.run(command, check=True)
-        print(f"File saved as: {output_file}")
+        subprocess.run(cmd, check=True)
+        print(f"Converted to 60 FPS: {output_file}")
         return output_file
     except subprocess.CalledProcessError as e:
-        print(f"Error during 60 FPS conversion: {e}")
+        print(f"Conversion error: {e}")
         return None
     except FileNotFoundError:
-        print("FFmpeg not found. Ensure it is installed and available in the system PATH.")
+        print("FFmpeg not found. Ensure it is installed.")
         return None
 
+def download_tiktok_video(url):
+    """
+    Downloads a TikTok video using yt-dlp (without watermark)
+    and converts it to H.264 (MP4) format using FFmpeg.
+    If conversion succeeds, the encoded file is deleted.
+    """
+    opts = {
+        'format': 'mp4',  # save as mp4
+        'outtmpl': './%(title)s.%(ext)s',  # Output filename
+    }
 
+    try:
+        # Step 1: Download the video using yt-dlp
+        with YoutubeDL(opts) as ydl:
+            info = ydl.extract_info(url, download=True)
+            file_path = ydl.prepare_filename(info)
+            print(f"Video downloaded successfully: {file_path}")
+        
+        # Step 2: Convert to H.264 format if necessary
+        converted_file = convert_to_h264(file_path)
 
+        # Step 3: Remove original file if conversion succeeded
+        if converted_file:
+            os.remove(file_path)
+            print(f"Original file removed: {file_path}")
+
+        return converted_file or file_path
+
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return None
+
+def convert_to_h264(file_path):
+    """
+    Converts a video to H.264 (MP4) format using FFmpeg.
+    """
+    if not os.path.exists(file_path):
+        print(f"File not found: {file_path}")
+        return None
+
+    output_file = f"h264_{os.path.basename(file_path)}"
+    cmd = [
+        "ffmpeg", "-i", file_path, "-c:v", "libx264", "-c:a", "aac", "-strict", "experimental", output_file
+    ]
+    
+    try:
+        subprocess.run(cmd, check=True)
+        print(f"Converted file saved as: {output_file}")
+        return output_file
+    except subprocess.CalledProcessError as e:
+        print(f"FFmpeg conversion error: {e}")
+        return None
+    except FileNotFoundError:
+        print("FFmpeg not found. Please install FFmpeg and try again.")
+        return None
 
 if __name__ == "__main__":
-
-
-    """
-    Handles user input to download a YouTube video and ensures the best quality.
-    If the video is below 60 FPS, it gives an option to convert it to 60 FPS.
-    """
-
-    url = input("Enter the YouTube video URL: ")
-    downloaded_file, fps = download_func(url)
-
-    if downloaded_file:
-        if fps and fps >= 60:
-            print("\nThe video already has 60 FPS. No conversion needed.")
-        else:
-            convert_choice = input("\nThe video does not have 60 FPS. Would you like to convert it to 60 FPS? (y/n): ").strip().lower()
-            if convert_choice == 'y':
-                converted_file = convert_fps(downloaded_file)
-                if converted_file:
-                    print(f"\nDone! The file has been saved as: {converted_file}")
+    while True:
+        print("\nMenu:")
+        print("1. Download YouTube video")
+        print("2. Download TikTok video")
+        print("3. Exit")
+        
+        choice = input("Enter your choice (1/2/3): ").strip()
+        
+        if choice == "1":
+            url = input("Enter YouTube URL: ").strip()
+            file_path, fps = download_youtube_video(url)
+            if file_path:
+                if fps and fps >= 60:
+                    print("Video is already 60 FPS. No conversion needed.")
+                else:
+                    if input("Convert to 60 FPS? (y/n): ").strip().lower() == 'y':
+                        converted = convert_to_60fps(file_path)
+                        if converted:
+                            print(f"Saved as: {converted}")
+                    else:
+                        print("Conversion skipped.")
+        elif choice == "2":
+            url = input("Enter TikTok URL: ").strip()
+            final_file = download_tiktok_video(url)
+            if final_file:
+                print(f"Final video file is ready: {final_file}")
             else:
-                print("\nProcess completed without conversion.")
+                print("Failed to process the video.")
+        elif choice == "3":
+            print("Exiting program. Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please select 1, 2, or 3.")
