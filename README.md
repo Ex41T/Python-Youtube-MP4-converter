@@ -25,5 +25,5 @@
 
 <h4>Provides clear error messages if something goes wrong, such as missing dependencies or failed operations.</h4>
 
-<h1>Disclaimer:</h1>
-<h2>This tool is intended solely for downloading videos that you own or have explicit permission to download. Unauthorized downloading of copyrighted material from YouTube, TikTok, or any other platform may violate their Terms of Service and copyright laws in your country. By using this tool, you agree to comply with all applicable laws and regulations.</h2>
+<h1>Disclaimer:
+This tool is intended solely for downloading videos that you own or have explicit permission to download. Unauthorized downloading of copyrighted material from YouTube, TikTok, or any other platform may violate their Terms of Service and copyright laws in your country. By using this tool, you agree to comply with all applicable laws and regulations.</h1>
