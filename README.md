@@ -1,5 +1,5 @@
 <h1>YouTube & TikTok Video Converter<h1>
-<h3>Looking for a simple way to download videos from YouTube and TikTok? This command-line tool has got you covered! It lets you download videos in the best available quality and saves them as MP4 files. Plus, it offers handy features like converting YouTube videos to 60 FPS for smoother playback or transcoding TikTok videos to H.264 format, making them more compatible with various devices and players.<h2>
+<h3>Looking for a simple way to download videos from YouTube or TikTok? This command-line tool has got you covered! It lets you download videos in the best available quality and saves them as MP4 files. Plus, it offers handy features like converting YouTube videos to 60 FPS for smoother playback or transcoding TikTok videos to H.264 format.<h2>
 
 <h2><strong>What Can This Tool Do?</strong></h2>
 
