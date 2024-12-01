@@ -24,7 +24,7 @@
 <h4>Checks if FFmpeg is installed before running, so everything should work.</h4>
 
 
-<h3>**Disclaimer:**
+<h3>**Disclaimer**:
 This tool is designed and intended solely for personal and lawful use. It allows users to download videos that they own or have explicit permission to download. 
 
 Unauthorized downloading of copyrighted material from YouTube, TikTok, or any other platform may violate their Terms of Service and copyright laws in your country. By using this tool, you agree to take full responsibility for ensuring compliance with all applicable laws, regulations, and platform terms of service.
