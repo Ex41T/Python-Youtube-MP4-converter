@@ -2,8 +2,7 @@ import os
 import shutil
 import time
 from tiktok.functions import download_tiktok_video
-from youtube.functions import download_youtube_video
-from vimeo.functions import download_vimeo_video  
+from youtube.functions import download_youtube_video  
 from converter import conv60fps 
 from converter import h264format_conv 
 from yt_dlp import YoutubeDL
@@ -59,14 +58,6 @@ def download_video(url):
         final_file = download_tiktok_video(url, output_path)
         if final_file:
             print(f"Final video file is ready: {final_file}")
-        else:
-            print("Failed to process the video.")
-        return final_file
-    
-    elif platform == "vimeo":
-        final_file = download_vimeo_video(url, output_path) 
-        if final_file:
-            print(f"Final video file from Vimeo is ready: {final_file}")
         else:
             print("Failed to process the video.")
         return final_file
