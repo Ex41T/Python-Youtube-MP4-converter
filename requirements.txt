@@ -1,6 +1,5 @@
-# Python dependencies
-yt-dlp>=2021.12.1
-ffmpeg-python>=0.2.0
+# Python requirements
+yt-dlp
 
 # Note: You must manually install the FFmpeg binary and add it to your system's PATH.
 # FFmpeg installation guide:
