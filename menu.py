@@ -3,9 +3,9 @@ import shutil
 import time
 from tiktok.functions import download_tiktok_video
 from youtube.functions import download_youtube_video
-from vimeo.functions import download_vimeo_video  # Funkcja do pobierania z Vimeo
-from converter import conv60fps  # Import funkcji konwersji 60 FPS dla YouTube
-from converter import h264format_conv  # Import funkcji konwersji H.264 dla TikTok
+from vimeo.functions import download_vimeo_video  
+from converter import conv60fps 
+from converter import h264format_conv 
 from yt_dlp import YoutubeDL
 import re
 
@@ -17,7 +17,7 @@ def check_ffmpeg():
         print("Error: FFmpeg is not installed or not added to the PATH.")
         print("Please install FFmpeg and ensure it is accessible from the command line.")
         time.sleep(5)
-        exit(1)  # Exit the program
+        exit(1)  
 
 def detect_platform(url):
     """
