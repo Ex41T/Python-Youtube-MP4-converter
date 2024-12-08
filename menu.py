@@ -2,7 +2,8 @@ import os
 import shutil
 import time
 from tiktok.functions import download_tiktok_video
-from youtube.functions import download_youtube_video  
+from youtube.functions import download_youtube_video 
+from facebook.functions import download_facebook_reels
 from converter import conv60fps 
 from converter import h264format_conv 
 from yt_dlp import YoutubeDL
@@ -26,8 +27,8 @@ def detect_platform(url):
         return "youtube"
     elif "tiktok.com" in url:
         return "tiktok"
-    elif "vimeo" in url:
-        return "vimeo"
+    elif "facebook.com" in url:
+        return "facebook"
     else:
         return None  
 
@@ -62,8 +63,18 @@ def download_video(url):
             print("Failed to process the video.")
         return final_file
     
+    
+    elif platform == "facebook":
+        file_path = download_facebook_reels(url, output_path)
+        if file_path:
+            print(f"Final reels is ready: {file_path}")
+            return file_path
+        else:
+            print("Failed to download facebook reels.")
+            return None
+
     else:
-        print("Unsupported platform. Please provide a valid YouTube, TikTok, or Vimeo link.")
+        print("Unsupported platform. Please provide a valid YouTube, TikTok, or Facebook link.")
         return None
 
 if __name__ == "__main__":
